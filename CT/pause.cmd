@@ -1,0 +1,1 @@
+@Ensambla.exe %1 & @pause
