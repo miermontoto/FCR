@@ -1,0 +1,14 @@
+ORIGEN 0500h
+INICIO primera
+
+.CODIGO
+
+primera: 
+  xor r0, r0, r0
+  xor r1, r1, r1
+  movh r0, 0F0h
+  movl r1, '*'
+  movh r1, 07h
+  
+  mov [r0], r1
+FIN
