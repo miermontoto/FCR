@@ -1,0 +1,26 @@
+ORIGEN 300h
+.PILA 20h
+.CODIGO
+  MOVL  R0, 3
+  MOVH  R0, 0
+  MOVL  R1, BYTEBAJO DIRECCION rutina_util
+  MOVH  R1, BYTEALTO DIRECCION rutina_util
+  MOV [R0], R1
+  STI
+  
+Jumpman:
+  JMP Jumpman
+
+PROCEDIMIENTO rutina_util
+  PUSH R0
+  PUSH R1
+  MOVL R0, 00h
+  MOVH R0, 0E0h
+  MOV R1, [R0]
+  MOV [R0], R1
+  POP R1
+  POP R0
+  IRET
+FINP
+
+FIN
