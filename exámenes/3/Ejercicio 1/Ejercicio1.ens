@@ -1,0 +1,111 @@
+; Ejercicio 1
+;---------------------------------------
+; Este ejercicio leerá de teclado diferentes teclas hasta encontrar
+; un espacio. Las pulsaciones se guardarán en memoria a partir de la
+; posición  apuntada por "array".
+;
+; En la posición a la que apunta "contador" se encuentra el número
+; de pulsaciones de teclas guardadas en memoria.
+;
+; El espacio reservado en "array" es de 15 palabras de 16 bits.
+;
+; Completa los huecos para que la ejecución sea correcta con las siguientes
+; indicaciones:
+;  - La secuencia de teclas a pulsar será: 'EXAMEN2021'[espacio]
+;
+;  - La interfaz de teclado se encuentra mapeada a partir de la
+;    dirección F700h
+;
+; IMPORTANTE: Haz una captura de pantalla de la memoria
+; a partir de la dirección apuntada por 'array'
+;----------------------------------------
+
+ORIGEN 1500h
+INICIO comienzo
+
+.DATOS
+	array        VALOR 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    contador       VALOR 00h
+
+.CODIGO
+comienzo:
+	movl r1, 01h
+	movh r1, 0F7h ; r1 apunta al registro de estado/control del teclado
+
+	movl r2, 00h
+	movh r2, 01h ; r2 = 100h, la máscara para detectar pulsación
+
+	movl r0, 00h
+	movh r0, 0F7h ; r0 apunta al registro de datos del teclado
+
+muestreo:
+	mov r3, [r1] ; r3 = valor del registro de estado/control
+	and r3, r3, r2 ; aplica la máscara
+	brz muestreo
+
+	mov r4, [r0] ; r4 = código de la pulsación = scan-ASCII
+
+	movh  r5, 32h
+	movl  r5, 20h ; Codigo de tecla espacio para finalizar el proceso
+
+	cmp r5, r4
+	brnz guardamos_en_memoria   ; Si el caracter es espacio finalizamos, sino guardamos.
+	jmp finalizacion
+
+
+	guardamos_en_memoria:
+	push r4          ; Pasamos como argumento a la funcion lo leido de teclado
+	call guarda_en_memoria
+	inc r7   ; Borramos el argumento pasado a la pila
+
+	jmp muestreo
+
+PROCEDIMIENTO guarda_en_memoria
+
+    ; Prologo
+	push r6
+	mov r6, r7  ; Copiamos el puntero de la pila
+
+    ; Salvaguarda de registros
+	push r1
+	push r2
+	push r3
+	push r4
+
+    ; Obtención de parámetros
+	inc r6
+	inc r6
+	mov  r2, [r6] ; Cargamos el argumento pasado a la funcion
+
+	movh r3, BYTEALTO DIRECCION array
+	movl r3, BYTEBAJO DIRECCION array
+
+	movh r4, BYTEALTO DIRECCION contador
+	movl r4, BYTEBAJO DIRECCION contador
+	mov r1, [r4]
+	; cargamos valor del contador
+
+	add r3, r3, r1
+	; actualizamos a la siguiente dirección donde guardar el caracter
+
+	mov [r3], r2
+	; guardamos el caracter en memoria
+
+	INC r1
+	mov [r4], r1
+	; actualizamos el contador
+
+
+	; Restauracion registros
+	pop r4
+	pop r3
+	pop r2
+	pop r1
+	pop r6
+	ret
+FINP
+
+finalizacion:
+
+FIN
+

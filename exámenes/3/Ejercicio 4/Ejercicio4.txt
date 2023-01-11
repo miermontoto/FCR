@@ -1,0 +1,17 @@
+Responde a las preguntas indicadas más adelante.
+
+Cuando se te pida, realiza las capturas de pantalla para justificar la respuesta.
+
+***************************************************
+
+Responde a las siguientes preguntas:
+
+Pregunta 1
+¿Cuál es tiempo medio estimado en realizar una conexión con el servidor www.nasa.gov, si es posible la conexión? Haz una captura de pantalla en la que se vea el comando que has ejecutado para obtenerla y la respuesta obtenida. Guárdala con el nombre "captura1.png".
+--- 1 Responde en papel a la Pregunta 1
+
+Pregunta 2
+¿Cuál es la dirección IP asignada al servidor www.un.org? Haz una captura de pantalla en la que se vea la orden que has ejecutado para obtenerla y llámala "captura2.png". 
+--- 2 Responde en papel a la Pregunta 2
+
+

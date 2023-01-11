@@ -1,0 +1,84 @@
+﻿Los valores de las variables "v" y "w" se consideran como cantidades HEXADECIMALES
+
+*******************************************************************************
+
+El trozo de código C++ a implementar será:
+
+unsigned int min(unsigned int a, unsigned int b)
+{
+    unsigned int result = 0;
+    if(a >= b)
+        result = a + 1;
+    else
+        result = b + 1;  
+        
+    return result;
+}
+
+
+// Programa principal
+
+unsigned int v = 0x4A0B;
+unsigned int w = 0x5C28;
+
+unsigned int r = min(v, w); // Ver instrucciones debajo
+
+*******************************************************************************
+INSTRUCCIONES
+*******************************************************************************
+El procedimiento devuelve el resultado en R0. Los parámetros se apilan de derecha a izquierda.
+
+Utiliza el registro r4 como registro auxiliar para almacenar la variable r.
+
+*******************************************************************************
+COMPLETA Y PEGA A CONTINUACIÓN EL CÓDIGO ENSAMBLADOR CORRESPONDIENTE AL PROGRAMA
+*******************************************************************************
+
+; Codigo del programa principal
+
+; Paso de parámetros
+movl r1, 28h
+movh r1, 5Ch
+push r1 ; Se pasa w
+movl r1, 0Bh
+movh r1, 4Ah
+push r1 ; Se pasa v
+
+
+; Llamada al procedimiento y postprocesamiento
+call min
+inc r7
+inc r7
+mov r4, r0
+nop
+
+; Codigo del procedimiento
+min:
+; Prologo, salvaguarda y recuperacion de parametros
+push r6
+mov r6, r7
+push r2
+push r3
+inc r6
+inc r6
+mov r2, [r6] ; numero a 
+inc r6
+mov r3, [r6] ; numero b en r3
+
+; Algoritmo de la funcion
+xor r0, r0, r0 ; result = 0
+CMP r2, r3
+brnc consecuente
+inc r3
+mov r0, r3
+jmp final
+consecuente:
+inc r2
+mov r0, r2
+
+; Restauracion y retorno
+final:
+pop r3
+pop r2
+pop r6
+ret

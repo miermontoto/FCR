@@ -1,0 +1,67 @@
+﻿
+El fragmento de código C++ a implementar será:
+
+unsigned int var1 = 26;
+unsigned int result = 28;
+unsigned int j;
+
+if (var1 >= 12)
+    j = var1;
+else 
+    j = 12;
+
+for(unsigned int i = j; i != 1; i--) {
+    result = result - 1;
+}
+
+
+*******************************************************************************
+INSTRUCCIONES
+*******************************************************************************
+Inicializa en el simulador los siguientes registros con los siguientes valores:
+
+r0 -> result -> 28 (Recuerda expresar el valor en hexadecimal)
+r1 -> var1 -> 26 (Recuerda expresar el valor en hexadecimal)
+
+Realiza una captura de pantalla del simulador en la que aparezcan estos registros inicializados.
+
+Utilizando "INSTRUCCIONES" inicializa los registros:
+r2 -> 12
+r3 -> 1
+
+Para las variables j e i usa otros registros
+
+*******************************************************************************
+PEGA A CONTINUACIÓN EL CÓDIGO ENSAMBLADOR CORRESPONDIENTE AL PROGRAMA
+*******************************************************************************
+@---@
+@---cd@
+movl r2, 12
+movh r2, 0
+
+movl r3, 1
+movh r3, 0
+
+; Se utiliza r4 para j.
+
+CMP r1, r2
+brnc true
+mov r4, r2
+jmp end
+true:
+mov r4, r1
+end:
+
+; Se utiliza r5 para i.
+
+mov r5, r4 ; i = j
+
+startFor:
+CMP r5, r3
+brz endFor ; Si i == 1, se sale del bucle.
+
+; Cuerpo del bucle
+dec r0 ; result = result - 1
+dec r5 ; i--
+jmp startFor
+endFor:

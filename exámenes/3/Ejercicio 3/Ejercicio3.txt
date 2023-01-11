@@ -1,0 +1,23 @@
+Abre el archivo de captura de Wireshark (captura.pcapng) que se te ha proporcionado, el cual recoge una captura de tramas intercambiadas entre un cliente web y un servidor web. 
+
+Se recomienda desactivar las opciones de resolución de direcciones MAC y direcciones de transporte a través de las preferencias del Wireshark.
+
+******************************************************************
+
+Responde a las siguientes preguntas:
+
+Pregunta 1
+¿Cuál es el tamaño del campo ventana para la trama 118? Responde en decimal.
+--- 1 Responde en papel a la Pregunta 1
+
+Pregunta 2
+Para la trama 221 indica cuál es el valor en hexadecimal del primer byte y del último byte correspondiente al protocolo TCP. 
+--- 2 Responde en papel a la Pregunta 2
+
+Pregunta 3
+¿Qué valor numérico en hexadecimal identifica el puerto destino de la trama 123? 
+--- 3 Responde en papel a la Pregunta 3
+
+Pregunta 4
+Indica el nombre del primer archivo que pide el cliente al servidor usando HTTP.
+--- 4 Responde en papel a la Pregunta 4

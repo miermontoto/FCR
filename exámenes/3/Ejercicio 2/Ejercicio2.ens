@@ -1,0 +1,67 @@
+; Ejercicio 2
+; -----------
+; Instala una rutina de servicio de interrupción para la interfaz del periférico luces.
+; Cada vez que se pulsa el botón de interrupción del periférico luces 
+; se imprimie el mensaje "Luces genera int." en el periférico pantalla.
+
+; La configuración de la pantalla y de la interfaz del periférico luces viene dada por
+; el archivo de estado de la simulación proporcionado.
+
+ORIGEN 7000h
+
+.DATOS
+posicion VALOR 0F900h ; Posición inicial de la interfaz de vídeo
+mensaje VALOR "Luces genera int.", 0
+
+.CODIGO
+	movl r2, 5
+	movh r2, 0 ; r2 = vector de interrupción de luces
+	
+	movl r3, BYTEBAJO DIRECCION rutina
+	movh r3, BYTEALTO DIRECCION rutina
+	mov [r2], r3 ; Instala la rutina de interrupción
+	
+	sti ; habilita las interrupciones
+	
+	jmp -1 ; bucle infinito
+
+
+PROCEDIMIENTO rutina
+	; Salva los registros modificados
+	push r2
+	push r3
+	push r4
+	push r5
+	push r6
+    	
+	movl r4, BYTEBAJO DIRECCION posicion
+    movh r4, BYTEALTO DIRECCION posicion ; r4 = dirección de variable posicion
+  	movl r5, BYTEBAJO DIRECCION mensaje  
+  	movh r5, BYTEALTO DIRECCION mensaje  ; r5 = dirección de la variable mensaje 
+
+	xor r2, r2, r2
+	mov r3, [r4] ; r3 = valor de posicion inicial en pantalla
+	
+bucle: 
+	mov r6, [r5]
+	cmp r6, r2
+	brz fin_escritura
+	movh r6, 38h ; negro sobre fondo blanco
+	mov [r3], r6 ; escribimos un carácter en pantalla
+	inc r3
+	inc r5
+	jmp bucle
+
+fin_escritura:
+	mov [r4], r3; actualizamos valor de la variable posición 
+
+	; Restaurar los registros modificados
+	pop r6
+	pop r5
+	pop r4
+	pop r3
+	pop r2
+	
+	iret ; termina la rutina de interrupción
+FINP
+FIN
